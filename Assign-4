@@ -1,0 +1,51 @@
+#!/bin/bash
+read -p "Enter name: " name
+whitespace='                          '
+recurse(){
+if [[ $name =~ [A-Z] && $name =~ ^[[:upper:]]+$ ]]
+then
+name=$(echo $name | tr [:upper:] [:lower:])
+elif [[ $name =~ [a-z] ]]
+then
+read -p "Enter name in UPPER case: " name
+recurse
+fi
+}
+recurse
+name1=$name
+for((i=${#name1};i>1;i-=1))
+do
+if [[ $i == ${#name1} ]]
+then
+name4="${name1:i-1:1}"
+echo "${whitespace:0:i-1}""$name4"
+else
+name4="${name1:i-1:(${#name1}+1)}"
+for((p=${#name4};p>1;p-=1))
+do
+name5="${name4:p-2:1}"
+name6=$name6$name5
+done
+echo "${whitespace:0:i-1}""$name4""$name6"
+fi
+name6=""
+done
+k=0
+for((i=${#name};i>0;i-=1))
+do
+name3=""
+if [[ $i == ${#name} ]]
+then
+name1="${name:0:i}"
+for((j=${#name1};j>1;j-=1))
+do
+name2="${name1:j-2:1}"
+name3=$name3$name2
+done
+else
+name1="${name:1:(${#name}-2)}"
+fi
+echo "${whitespace:0:$k}""$name1""$name3"
+name=$name1$name3
+k=$k+1
+done
