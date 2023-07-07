@@ -1,0 +1,11 @@
+#!/bin/bash
+read -p "Enter name:" name
+echo "$name"
+if [[ $name =~ [A-Z] ]]
+then
+name=$(echo $name | tr [:upper:] [:lower:])
+fi
+for((i=${#name};i>0;i--))
+do
+echo "${name:0:i}"
+done
