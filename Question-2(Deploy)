@@ -1,24 +1,46 @@
 #!/bin/bash
 
+exitCode=$?
+       if [[ $exitCode != "command not found" ]]
+       then
+       echo "*******************************"
+       echo "** Docker is Already Present **"
+       echo "*******************************"
+       else
        #Installing docker
-        echo "***********************"
-        echo "** INSTALLING DOCKER **" 
-        echo "***********************"
-        sudo dnf -y install docker
-        sudo dnf upgrade --releasever=2023.1.20230705
-        sudo systemctl start docker
-        sudo docker run hello-world
-        docker --version
-        echo " "
-        #Installing minikube
+       echo "***********************"
+       echo "** INSTALLING DOCKER **"
+       echo "***********************"
+       sudo dnf -y install docker
+       sudo dnf upgrade --releasever=2023.1.20230705
+       sudo systemctl start docker
+       sudo docker run hello-world
+       sudo docker --version
+       echo "**************************************"
+       echo "** Docker is Installed Successfully **"
+       echo "**************************************"
+       fi
+
+exitCode=$?
+        if [[ $exitCode != "minikube: command not found" ]]
+        then
+        echo "*********************************"
+        echo "** Minikube is Already Present **"
+        echo "*********************************"
+        else
+        #installing minikube
         echo "*************************"
         echo "** INSTALLING MINIKUBE **"
         echo "*************************"
         curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
         chmod +x ./kubectl
+        sudo mv ./kubectl /usr/local/bin/kubectl
         curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
         sudo install minikube-linux-amd64 /usr/local/bin/minikube
         sudo minikube version
         curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-arm64
         sudo install minikube-linux-arm64 /usr/local/bin/minikube
-        echo "Docker and Minikube Installed Successfully..."
+        echo "****************************************"
+        echo "** Minikube is Installed Successfully **"
+        echo "****************************************"
+        fi
